@@ -1,0 +1,44 @@
+<script src="../myToFixed.js"></script>
+<script src="simpletest.js"></script>
+<script>
+
+tests({
+  'It should return a string': function () {
+    var result = myToFixed(5)
+    var isString = typeof result === 'string';
+    eq (isString, true);
+  },
+  'It should round the provided number to the supplied number of decimal places': function () {
+    var result = myToFixed(1.47, 1);
+    eq(result, '1.5');
+  },
+  'It should return the number unchanged but converted to string if not given a decimal places value.': function () {
+    var result = myToFixed(1.47);
+    eq(result, '1.47');
+  },
+  'It should return undefined if number is undefined' : function() {
+    var result = myToFixed(undefined);
+    eq(result, undefined);
+  },
+  'It should return the string "NaN" if number is not a number' : function() {
+    var result = myToFixed(NaN);
+    eq(result, 'NaN');
+  },
+  'It should not modify the original number': function () {
+    var testNum = 1.47;
+    myToFixed(testNum);
+    eq(testNum, 1.47);
+  },
+  'It should correctly round up numbers which are slightly smaller than their displayed/intended value': function () {
+    eq(myToFixed(1.005, 2), '1.01');
+    eq(myToFixed(10.235, 2), '10.24');
+    eq(myToFixed(0.615, 2), '0.62');
+  },
+
+  'It should maintain any preceding zeros for numbers less than 1': function() {
+    var testNum = 0.56;
+    eq(myToFixed(testNum, 1), '0.6');
+  }
+
+})
+</script>
